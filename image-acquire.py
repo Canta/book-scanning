@@ -136,10 +136,14 @@ def main():
     cam.set(4,height)
     
     ret, cap = cam.read()
-    if cap is not False: 
+    debug( [ "camera read() return value", ret ] )
+    if cap is not False and ret is not False: 
         if cam.isOpened() == 1:
             cv2.imwrite(output, cap)
             cam.release()
+    else :
+        print "\nERROR : failed to capture image from device #" + str(device) + ".\n"
+        exit(1)
     
     
     debug("Done.")
