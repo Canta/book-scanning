@@ -135,22 +135,25 @@ def main():
     cam.set(3,width)
     cam.set(4,height)
     
+    take_picture( cam, output )
+    
+    debug("Done.")
+    exit(0)
+
+def take_picture( cam, output_file ) :
     ret, cap = cam.read()
     debug( [ "camera read() return value", ret ] )
     if cap is not False and ret is not False: 
         if cam.isOpened() == 1:
-            ret2 = cv2.imwrite(output, cap)
+            ret2 = cv2.imwrite(output_file, cap)
             cam.release()
             if not ret2 :
-                print "\nERROR : failed to write image to " + str(output) + ".\n"
+                print "\nERROR : failed to write image to " + str(output_file) + ".\n"
                 exit(1)
     else :
         print "\nERROR : failed to capture image from device #" + str(device) + ".\n"
         exit(1)
     
-    
-    debug("Done.")
-    exit(0)
 
 if __name__ == '__main__':
     _debug      =   False
