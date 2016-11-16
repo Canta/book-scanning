@@ -2,26 +2,26 @@
 #include <stdlib.h>
 
 // Global constants
-const char BIT_BOTTOM       = 2;
-const char BIT_TOP          = 3;
-const char BIT_DIRECTION    = 4;
-const char BIT_MOVE         = 5;
-const char BIT_FAN          = 6;
+const char BIT_BOTTOM       = 2;            // Fin de carrera Inferior IN pin2
+const char BIT_TOP          = 3;            // Fin de carrera Superior IN pin3
+const char BIT_DIRECTION    = 4;            // Bobina del relay inversor OUT pin4
+const char BIT_MOVE         = 5;            // Bobina del releay on/off OUT pin5
+const char BIT_FAN          = 6;            // Ventilador sopla hojas OUT pin6
 
-const char PLATE_STATE_ERROR    = 0;
-const char PLATE_STATE_UP       = 1;
-const char PLATE_STATE_DOWN     = 2;
-const char PLATE_STATE_MIDDLE   = 3;
+const char PLATE_STATE_ERROR    = 0;        // Error en el pratternboxx
+const char PLATE_STATE_UP       = 1;        // Pratterboxx arriba
+const char PLATE_STATE_DOWN     = 2;        // Pratterboxx abajo
+const char PLATE_STATE_MIDDLE   = 3;        // Pratterboxx en el medio
 
-const char PLATE_DIRECTION_UP   = 1;
-const char PLATE_DIRECTION_DOWN = 2;
+const char PLATE_DIRECTION_UP   = 1;        // Dirección del pratterboxx arriba
+const char PLATE_DIRECTION_DOWN = 2;        // Dirección del pratterboxx abajo
 
-const char CYCLE_STATE_ERROR          = 0;
-const char CYCLE_STATE_IDLE           = 1;
-const char CYCLE_STATE_GOING_HOME     = 2;
-const char CYCLE_STATE_PAGE_FIX       = 3;
-const char CYCLE_STATE_SCANNING       = 4;
-const char CYCLE_STATE_PAGE_TURN      = 5;
+const char CYCLE_STATE_ERROR          = 0;  // Error en el ciclo
+const char CYCLE_STATE_IDLE           = 1;  // En espera
+const char CYCLE_STATE_GOING_HOME     = 2;  // Camino a casa
+const char CYCLE_STATE_PAGE_FIX       = 3;  //
+const char CYCLE_STATE_SCANNING       = 4;  //
+const char CYCLE_STATE_PAGE_TURN      = 5;  //
 
 // constants for anti-error toggling trick timing during page turn.
 const unsigned long PAGE_TURN_FIRST_TOGGLE    = 4000; 
@@ -38,13 +38,13 @@ void setup( )
 {
     Serial.begin(9600);
     
-    pinMode(BIT_BOTTOM      , INPUT);
-    pinMode(BIT_TOP         , INPUT);
-    pinMode(BIT_DIRECTION   , OUTPUT);
-    pinMode(BIT_MOVE        , OUTPUT);
-    pinMode(BIT_FAN         , OUTPUT);
+    pinMode(BIT_BOTTOM      , INPUT);      // Fin de carrera Inferior IN pin2
+    pinMode(BIT_TOP         , INPUT);      // Fin de carrera Superior IN pin3
+    pinMode(BIT_DIRECTION   , OUTPUT);     // Bobina del relay inversor OUT pin4
+    pinMode(BIT_MOVE        , OUTPUT);     // Bobina del releay on/off OUT pin5
+    pinMode(BIT_FAN         , OUTPUT);     // Ventilador sopla hojas OUT pin6
     
-    plate_go_home();
+    plate_go_home();                        // you are drunk
     
     Serial.println('{ action : "setup" }');
 }
