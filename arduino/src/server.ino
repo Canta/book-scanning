@@ -37,6 +37,7 @@ char            page_turn_toggled_times;
 void setup( )
 {
     Serial.begin(9600);
+    cycle_notify( "setup", "start");
     
     pinMode(BIT_BOTTOM      , INPUT);      // Fin de carrera Inferior IN pin2
     pinMode(BIT_TOP         , INPUT);      // Fin de carrera Superior IN pin3
@@ -44,9 +45,9 @@ void setup( )
     pinMode(BIT_MOVE        , OUTPUT);     // Bobina del releay on/off OUT pin5
     pinMode(BIT_FAN         , OUTPUT);     // Ventilador sopla hojas OUT pin6
     
-    plate_go_home();                        // you are drunk
+    plate_go_home();                       // you are drunk
     
-    Serial.println('{ action : "setup" }');
+    cycle_notify( "setup", "end");
 }
 
 char plate_check_state()
@@ -58,10 +59,12 @@ char plate_check_state()
     if (bottom && !top)
     {
         ret = PLATE_STATE_DOWN;
+        cycle_notify( "plate", "state_down");
     }
     else if (!bottom && top)
     {
         ret = PLATE_STATE_UP;
+        cycle_notify( "plate", "state_up");
     }
     else if (!bottom && !top)
     {
@@ -90,12 +93,14 @@ void plate_stop_moving()
 void plate_start_moving()
 {
     digitalWrite( BIT_MOVE, HIGH );
+    cycle_notify( "plate", "start_moving");
 }
 
 char plate_toggle( )
 {
     char l_toggle = plate_is_moving();
     digitalWrite( BIT_MOVE, l_toggle ? LOW : HIGH );
+    cycle_notify( "plate", "toggle");
     return !l_toggle;
 }
 
@@ -104,6 +109,7 @@ char plate_toggle_direction( )
     char l_dir = plate_current_direction == PLATE_DIRECTION_DOWN ? HIGH : LOW;
     digitalWrite( BIT_DIRECTION, l_dir );
     plate_current_direction = l_dir == HIGH ? PLATE_DIRECTION_UP : PLATE_DIRECTION_DOWN;
+    cycle_notify( "plate", "toggle_direction");
     return l_dir;
 }
 
@@ -113,6 +119,7 @@ void plate_go_home()
     plate_current_direction = PLATE_DIRECTION_UP;
     cycle_change_status( CYCLE_STATE_GOING_HOME );
     plate_start_moving();
+    cycle_notify( "plate", "go_home");
 }
 
 void plate_set_idle()
@@ -130,7 +137,7 @@ void cycle_page_turn()
 void cycle_change_status ( char status )
 {
     cycle_current_status = status;
-    cycle_notify( "change_status", (String) status );
+    cycle_notify( "cycle", "change_status: " + ((String) status) );
 } 
 
 void cycle_check_page_turn()
@@ -140,10 +147,12 @@ void cycle_check_page_turn()
     
     if ( l_turn1 || l_turn2 )
     {
+        cycle_notify( "cycle", "page_turning " + ( (String) page_turn_toggled_times ));
         page_turn_toggled_times++;
         plate_stop_moving();
         plate_toggle_direction();
         plate_start_moving();
+        cycle_notify( "cycle", "page_turning ok");
     }
     
 }
@@ -179,9 +188,9 @@ void cycle_parse_command( String command )
     
 }
 
-void cycle_notify( String stat, String err )
+void cycle_notify( String stat, String desc )
 {
-    Serial.println('{ action : "' + stat + '", description : "' + err + '" }');
+    Serial.println("{ action : '" + stat + "', description : '" + desc + "' }");
 }
 
 void loop( )
