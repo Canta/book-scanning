@@ -52,8 +52,8 @@ void setup( )
 
 char plate_check_state()
 {
-    char bottom = digitalRead( BIT_BOTTOM );
-    char top    = digitalRead( BIT_TOP );
+    char bottom = bitRead( BIT_BOTTOM, 0 );
+    char top    = bitRead( BIT_TOP, 0 );
     char ret    = PLATE_STATE_ERROR;
     
     if (bottom && !top)
@@ -160,8 +160,16 @@ void cycle_check_page_turn()
 void cycle_parse_command( String command )
 {
     command.trim();
+    if ( command == "\1" || command == "\0" || command == "" )
+    {
+        return;
+    }
+    
+    cycle_notify( "cycle", "ack: " + command );
+    
     if ( command.equals("GO_DOWN") )
     {
+        cycle_notify( "cycle", "command: GO_DOWN.");
         plate_stop_moving();
         plate_current_direction = PLATE_DIRECTION_DOWN;
         plate_start_moving();
@@ -191,6 +199,7 @@ void cycle_parse_command( String command )
 void cycle_notify( String stat, String desc )
 {
     Serial.println("{ action : '" + stat + "', description : '" + desc + "' }");
+    Serial.flush();
 }
 
 void loop( )
