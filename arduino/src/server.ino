@@ -206,6 +206,26 @@ void cycle_notify( String stat, String desc )
     Serial.flush();
 }
 
+void led_right_on()
+{
+    digitalWrite( BIT_RIGHT_LED, HIGH );
+}
+
+void led_right_off()
+{
+    digitalWrite( BIT_RIGHT_LED, LOW );
+}
+
+void led_left_on()
+{
+    digitalWrite( BIT_LEFT_LED, HIGH );
+}
+
+void led_left_off()
+{
+    digitalWrite( BIT_LEFT_LED, LOW );
+}
+
 void loop( )
 {
     // If the scanner is idle, it listens to commands.
