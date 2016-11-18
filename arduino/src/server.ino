@@ -46,6 +46,8 @@ void setup( )
     pinMode(BIT_DIRECTION   , OUTPUT);     // Bobina del relay inversor OUT pin4
     pinMode(BIT_MOVE        , OUTPUT);     // Bobina del releay on/off OUT pin5
     pinMode(BIT_FAN         , OUTPUT);     // Ventilador sopla hojas OUT pin6
+    pinMode(BIT_RIGHT_LED   , OUTPUT);     // Led iluminacion interna derecha OUT pin7
+    pinMode(BIT_LEFT_LED    , OUTPUT);     // Led iluminacion interna izquierda OUT pin8
     
     plate_go_home();                       // you are drunk
     
