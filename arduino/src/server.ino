@@ -7,6 +7,8 @@ const char BIT_TOP          = 3;            // Fin de carrera Superior IN pin3
 const char BIT_DIRECTION    = 4;            // Bobina del relay inversor OUT pin4
 const char BIT_MOVE         = 5;            // Bobina del releay on/off OUT pin5
 const char BIT_FAN          = 6;            // Ventilador sopla hojas OUT pin6
+const char BIT_RIGHT_LED    = 7;            // Led iluminacion interna derecha OUT pin7
+const char BIT_LEFT_LED     = 8;            // Led iluminacion interna izquiera OUT pin8
 
 const char PLATE_STATE_ERROR    = 0;        // Error en el pratternboxx
 const char PLATE_STATE_UP       = 1;        // Pratterboxx arriba
