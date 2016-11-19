@@ -56,8 +56,8 @@ void setup( )
 
 char plate_check_state()
 {
-    char bottom = bitRead( BIT_BOTTOM, 0 );
-    char top    = bitRead( BIT_TOP, 0 );
+    char bottom = digitalRead( BIT_BOTTOM );
+    char top    = digitalRead( BIT_TOP );
     char ret    = PLATE_STATE_ERROR;
     
     if (bottom && !top)
@@ -120,7 +120,8 @@ char plate_toggle_direction( )
 void plate_go_home()
 {
     plate_stop_moving();
-    plate_current_direction = PLATE_DIRECTION_UP;
+    plate_current_direction = PLATE_DIRECTION_DOWN;
+    plate_toggle_direction();
     cycle_change_status( CYCLE_STATE_GOING_HOME );
     plate_start_moving();
     cycle_notify( "plate", "go_home");
@@ -136,6 +137,8 @@ void cycle_page_turn()
 {
     page_turn_start_time    = millis();
     page_turn_toggled_times = 0;
+    cycle_change_status( CYCLE_STATE_PAGE_TURN );
+    plate_start_moving();
 }
 
 void cycle_change_status ( char status )
@@ -146,8 +149,8 @@ void cycle_change_status ( char status )
 
 void cycle_check_page_turn()
 {
-    char l_turn1 = millis() < page_turn_start_time + PAGE_TURN_FIRST_TOGGLE  && 1 > page_turn_toggled_times;
-    char l_turn2 = millis() < page_turn_start_time + PAGE_TURN_SECOND_TOGGLE && 2 > page_turn_toggled_times;
+    char l_turn1 = millis() > (page_turn_start_time + PAGE_TURN_FIRST_TOGGLE)  && 1 > page_turn_toggled_times;
+    char l_turn2 = millis() > (page_turn_start_time + PAGE_TURN_SECOND_TOGGLE) && 2 > page_turn_toggled_times;
     
     if ( l_turn1 || l_turn2 )
     {
@@ -176,6 +179,7 @@ void cycle_parse_command( String command )
         cycle_notify( "cycle", "command: GO_DOWN.");
         plate_stop_moving();
         plate_current_direction = PLATE_DIRECTION_DOWN;
+        cycle_change_status( CYCLE_STATE_SCANNING );
         plate_start_moving();
     }
     else if ( command.equals("PAGE_TURN") )
