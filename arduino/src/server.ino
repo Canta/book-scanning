@@ -144,7 +144,7 @@ void cycle_page_turn()
 void cycle_change_status ( char status )
 {
     cycle_current_status = status;
-    cycle_notify( "cycle", "change_status: " + ((String) status) );
+    cycle_notify( "cycle", "change_status: " + String( status, DEC ) );
 } 
 
 void cycle_check_page_turn()
@@ -206,7 +206,7 @@ void cycle_parse_command( String command )
 
 void cycle_notify( String stat, String desc )
 {
-    Serial.println("{ action : '" + stat + "', description : '" + desc + "' }");
+    Serial.println("{ \"action\" : \"" + stat + "\", \"description\" : \"" + desc + "\" }");
     Serial.flush();
 }
 
