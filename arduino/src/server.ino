@@ -121,12 +121,12 @@ void plate_go_home()
 {
     // si se lo manda a home y ya está en home avisa y no hace nada 
     char l_state = plate_check_state();
-	if ( PLATE_STATE_UP == l_state )
-	{
-		plate_stop_moving();
-		cycle_notify( "plate", "already_homed"); 
-		return;
-	}
+    if ( PLATE_STATE_UP == l_state )
+    {
+	plate_stop_moving();
+	cycle_notify( "plate", "already_homed"); 
+	return;
+    }
     plate_stop_moving();
     plate_current_direction = PLATE_DIRECTION_DOWN;
     plate_toggle_direction();
