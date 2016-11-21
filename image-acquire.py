@@ -135,12 +135,12 @@ def main():
     cam.set(3,width)
     cam.set(4,height)
     
-    take_picture( cam, output )
+    take_picture( cam, output, device )
     
     debug("Done.")
     exit(0)
 
-def take_picture( cam, output_file ) :
+def take_picture( cam, output_file, device=None ) :
     ret, cap = cam.read()
     debug( [ "camera read() return value", ret ] )
     if cap is not False and ret is not False: 
