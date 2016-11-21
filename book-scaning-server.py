@@ -87,12 +87,13 @@ def check_queue():
                 c.write_message( "{ \"command\" : \"scan\", \"device\" : " + str(cycle["device"]) + " }" )
             cycle["current"] = cycle["current"] + 1
             cycle["scans"]   = cycle["scans"]   + 1
+        elif cycle["is_down"] and cycle["current"] >= cycle["pages"] and cycle["last_status"] == CYCLE_STATUSES["IDLE"] :
+            input_queue.put( "GO_HOME" );
+            cycle["is_down"] = False
         elif cycle["is_down"] and cycle["scans"] >= 2 and cycle["last_status"] == CYCLE_STATUSES["IDLE"] :
             input_queue.put( "PAGE_TURN" );
             cycle["is_down"] = False
-        elif cycle["is_down"] and cycle["current"] >= cycle["pages"] and cycle["last_status"] == CYCLE_STATUSES["IDLE"] :
-            input_queue.put( "PAGE_TURN" );
-            cycle["is_down"] = False
+        
         #print cycle
 
 def cycle_start():
