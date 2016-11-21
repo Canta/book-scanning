@@ -22,7 +22,7 @@ scanner.conexion = {
        id       : null,
        socket   : null
    },
-   uri      : "ws://" + ((tmpurl.hostname.trim() == "") ? "localhost" : tmpurl.hostname) + ":8080/ws"
+   uri      : "ws://" + ((tmpurl.hostname.trim() == "") ? "localhost" : tmpurl.hostname) + ":8081/ws"
 };
 
 

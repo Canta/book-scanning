@@ -123,9 +123,9 @@ void plate_go_home()
     char l_state = plate_check_state();
     if ( PLATE_STATE_UP == l_state )
     {
-	plate_stop_moving();
-	cycle_notify( "plate", "already_homed"); 
-	return;
+      plate_stop_moving();
+      cycle_notify( "plate", "already_homed"); 
+      return;
     }
     plate_stop_moving();
     plate_current_direction = PLATE_DIRECTION_DOWN;
@@ -204,6 +204,21 @@ void cycle_parse_command( String command )
     {
         plate_set_idle();
     }
+    else if ( command.equals("LED_RIGHT") )
+    {
+        plate_led( BIT_LEFT_LED , LOW  );
+        plate_led( BIT_RIGHT_LED, HIGH );
+    }
+    else if ( command.equals("LED_LEFT") )
+    {
+        plate_led( BIT_RIGHT_LED , LOW  );
+        plate_led( BIT_LEFT_LED, HIGH );
+    }
+    else if ( command.equals("LED_OFF") )
+    {
+        plate_led( BIT_RIGHT_LED , LOW  );
+        plate_led( BIT_LEFT_LED, LOW );
+    }
     else
     {
         plate_set_idle();
@@ -218,24 +233,9 @@ void cycle_notify( String stat, String desc )
     Serial.flush();
 }
 
-void led_right_on()
+void plate_led( char bit_led, char value )
 {
-    digitalWrite( BIT_RIGHT_LED, HIGH );
-}
-
-void led_right_off()
-{
-    digitalWrite( BIT_RIGHT_LED, LOW );
-}
-
-void led_left_on()
-{
-    digitalWrite( BIT_LEFT_LED, HIGH );
-}
-
-void led_left_off()
-{
-    digitalWrite( BIT_LEFT_LED, LOW );
+    digitalWrite( bit_led, value );
 }
 
 void loop( )

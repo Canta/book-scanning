@@ -84,13 +84,20 @@ def check_queue():
         # When the plate's down, we take pictures.
         if cycle["current"] < cycle["pages"] and cycle["is_down"] and cycle["scans"] < 2 :
             for c in clients:
+                input_queue.put(  "LED_RIGHT" if cycle["device"] == 0 else "LED_LEFT" );
+                time.sleep(0.5)
                 c.write_message( "{ \"command\" : \"scan\", \"device\" : " + str(cycle["device"]) + " }" )
+                time.sleep(2)
             cycle["current"] = cycle["current"] + 1
             cycle["scans"]   = cycle["scans"]   + 1
         elif cycle["is_down"] and cycle["current"] >= cycle["pages"] and cycle["last_status"] == CYCLE_STATUSES["IDLE"] :
+            input_queue.put( "LED_OFF" );
+            time.sleep(1)
             input_queue.put( "GO_HOME" );
             cycle["is_down"] = False
         elif cycle["is_down"] and cycle["scans"] >= 2 and cycle["last_status"] == CYCLE_STATUSES["IDLE"] :
+            input_queue.put( "LED_OFF" );
+            time.sleep(1)
             input_queue.put( "PAGE_TURN" );
             cycle["is_down"] = False
         
@@ -218,8 +225,8 @@ if __name__ == '__main__':
     tornado.options.parse_command_line()
     app                 = tornado.web.Application( handlers=urls )
     server              = tornado.httpserver.HTTPServer(app)
-    server.listen( 8080 )
-    print "Listening on port:", 8080
+    server.listen( 8081 )
+    print "Listening on port:", 8081
     
     clients             = [] 
     input_queue         = worker.input_queue
