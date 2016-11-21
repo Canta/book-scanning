@@ -154,7 +154,7 @@ void cycle_check_page_turn()
     
     if ( l_turn1 || l_turn2 )
     {
-        cycle_notify( "cycle", "page_turning " + ( (String) page_turn_toggled_times ));
+        cycle_notify( "cycle", "page_turning " +  String( page_turn_toggled_times, DEC ) );
         page_turn_toggled_times++;
         plate_stop_moving();
         plate_toggle_direction();
