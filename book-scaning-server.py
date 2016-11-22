@@ -92,12 +92,12 @@ def check_queue():
             cycle["scans"]   = cycle["scans"]   + 1
         elif cycle["is_down"] and cycle["current"] >= cycle["pages"] and cycle["last_status"] == CYCLE_STATUSES["IDLE"] :
             input_queue.put( "LED_OFF" );
-            time.sleep(1)
+            time.sleep(2)
             input_queue.put( "GO_HOME" );
             cycle["is_down"] = False
         elif cycle["is_down"] and cycle["scans"] >= 2 and cycle["last_status"] == CYCLE_STATUSES["IDLE"] :
             input_queue.put( "LED_OFF" );
-            time.sleep(1)
+            time.sleep(2)
             input_queue.put( "PAGE_TURN" );
             cycle["is_down"] = False
         
