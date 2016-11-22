@@ -248,6 +248,7 @@ void loop( )
     }
     else
     {
+        Serial.readString();
         // First check is plate moving or static.
         if ( plate_is_moving() )
         {
