@@ -26,8 +26,8 @@ const char CYCLE_STATE_SCANNING       = 4;  //
 const char CYCLE_STATE_PAGE_TURN      = 5;  //
 
 // constants for anti-error toggling trick timing during page turn.
-const unsigned long PAGE_TURN_FIRST_TOGGLE    = 4000; 
-const unsigned long PAGE_TURN_SECOND_TOGGLE   = 7000; 
+const unsigned long PAGE_TURN_FIRST_TOGGLE    = 7000; 
+const unsigned long PAGE_TURN_SECOND_TOGGLE   = 9000; 
 
 
 // Global vars
@@ -119,6 +119,7 @@ char plate_toggle_direction( )
 
 void plate_go_home()
 {
+    /*
     // si se lo manda a home y ya está en home avisa y no hace nada 
     char l_state = plate_check_state();
     if ( PLATE_STATE_UP == l_state )
@@ -127,6 +128,7 @@ void plate_go_home()
       cycle_notify( "plate", "already_homed"); 
       return;
     }
+    */
     plate_stop_moving();
     plate_current_direction = PLATE_DIRECTION_DOWN;
     plate_toggle_direction();

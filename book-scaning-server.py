@@ -167,8 +167,8 @@ class Acquire :
             ret.message = str(numero) + " no es un número."
             return ret
         
-        #value = sp.call(["python", "image-acquire.py", "-d" + str(numero), "-r1280x1080", "-oacquisition-" + str(numero) + ".png"])
-        value = sp.call(["python", "image-acquire.py", "-d" + str(numero), "-r640x480", "-oacquisition-" + str(numero) + ".png"])
+        value = sp.call(["python", "image-acquire.py", "-d" + str(numero), "-r1280x1080", "-oacquisition-" + str(numero) + ".png"])
+        #value = sp.call(["python", "image-acquire.py", "-d" + str(numero), "-r640x480", "-oacquisition-" + str(numero) + ".png"])
         if value != 0 :
             ret         = RFail()
             ret.message = "Acquisition return value: " + str(value) + "."
